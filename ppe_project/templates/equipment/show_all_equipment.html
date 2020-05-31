@@ -6,10 +6,12 @@
 </head>
 <body>
     <h1>Viewing all Equipments</h1>
+        <hr>
     {% for equipment in all_equipment %}
-        {% equipment.package_number %}
+        
+       {{ equipment.package_number }}<br>
     {% endfor %}
-    <hr>
+
 
     
 </body>

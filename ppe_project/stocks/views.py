@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
+from django.http import HttpResponseRedirect
 
 
-from .forms import EquipmentForm
-from .models import Equipment
+from .forms import EquipmentForm, UseEquipmentForm
+from .models import Equipment, Used
 
 
 # Home Page
@@ -28,8 +29,29 @@ def add_equipment(request):
     form = EquipmentForm()
     if request.method == 'POST':
         form = EquipmentForm(request.POST)
+        form.save()
         return redirect(home)
+    print('failed to submit form')
     context = {
         'form': form,
     }
     return render(request, template_name, context=context)
+
+
+
+def use_equipment(request):
+    template_name = 'equipment/use_equipment.html'
+    form = UseEquipmentForm()
+
+    if request.method == 'POST':
+        form = UseEquipmentForm(request.POST)
+        form.save()
+        return redirect(home)
+    print('failed to submit form')
+    context = {
+        'form': form,
+    }
+
+
+    return render(request, template_name, context=context)
+

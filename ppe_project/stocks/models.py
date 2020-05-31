@@ -56,3 +56,14 @@ class Equipment(models.Model):
 
     def __str__(self):
         return self.package_number
+
+
+class Used(models.Model):
+    equipment = models.ForeignKey(Equipment, on_delete=models.CASCADE)
+    date_being_used = models.CharField(max_length=200)
+    qty_to_be_used = models.IntegerField()
+
+
+
+    def __str__(self):
+        return self.qty_to_be_used
