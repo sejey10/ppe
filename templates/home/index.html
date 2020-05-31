@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %} Home {% endblock title %}
+
+
+{% block content %}
+
+    <h1>PPE Inventory System</h1>
+    {% if user.is_authenticated %}
+	<p>Hi {{ user.username }}
+	<nav>
+		<a href="{% url 'show_all_equipment' %}"><h3>Show All Equipment</h3></a>
+		<a href="{% url 'use_equipment' %}"><h3>Use Equipment</h3></a>
+		<a href="{% url 'add_equipment' %}"><h3>Add Equipment</h3></a>
+	</nav>
+    <hr>
+	<p><a href="{% url 'logout' %}">Log out</a></p>
+	{% else %}
+	<p><a href="{% url 'signup' %}">Sign Up</a></p>
+	<p><a href="{% url 'login' %}">Log In </a></p>
+	{% endif %}
+
+
+{% endblock content %}
+
+
+
+	

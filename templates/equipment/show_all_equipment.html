@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %} Show All Equipment{% endblock title %}
+
+{% block content %}
+  <a href="{% url 'home' %}">Home</a>
+  <br>
+    <h1>Viewing all Equipments</h1>
+        <hr>
+    {% for equipment in all_equipment %}
+        
+       <a href="{% url 'detailed_equipment' equipment.pk %}">
+       	{{ equipment.package_number }}
+       </a>
+        - {{ equipment.qty_per_package }} {{ equipment.item_name }}S
+       Received by: {{ equipment.date_of_receipt }}
+       <br>
+    {% endfor %}
+
+{% endblock content %}

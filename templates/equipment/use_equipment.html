@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %} Use Equipment{% endblock title %}
+
+{% block content %}
+    <h1>Add Equipment</h1>
+    <hr>
+    <form method="POST">
+        {% csrf_token %}
+
+        {{ form|crispy }}
+        <button type="submit" class="btn btn-success">Use </button>
+    </form>
+{% endblock content %}
