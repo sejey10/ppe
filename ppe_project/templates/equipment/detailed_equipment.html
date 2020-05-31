@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Detailed Equipment Page</title>
+</head>
+<body>
+	
+	Package Number:	{{ equipment.package_number }} 
+	<br>
+	Total {{ equipment.item_name }}s:	{{ equipment.qty_per_package }} 
+	<br>
+	Currently Used: {{ total_used }}
+	<br>
+	Currently Available: {{ total_available }}
+	<br>
+
+	<hr>
+	Detailed breakdown of usage
+	{% for use in total_used_equipment %}
+		<ul>
+			<li>{{ use.date_being_used }} - {{ use.qty_to_be_used }}
+			id: {{ use.pk }} </li>
+		</ul>
+	{% endfor %}
+	
+</body>
+</html>
