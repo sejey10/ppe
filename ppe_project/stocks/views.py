@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect
 
 
 from .forms import EquipmentForm, UseEquipmentForm
-from .models import Equipment, Used
+from .models import Equipment, Used, Disposed
 
 
 # Home Page
@@ -41,24 +41,20 @@ def add_equipment(request):
 def detailed_equipment(request, id):
     template_name = 'equipment/detailed_equipment.html'
     equipment = Equipment.objects.get(id=id)
-    total_used_equipment = Used.objects.all().filter(equipment=id)
+    total_used_equipment = Used.objects.all().filter(equipment=id).filter(is_used=True)
+    disposed = Disposed.objects.all().filter(equipment=id)
+    not_used_equipment = Used.objects.all().filter(equipment=id).filter(is_used=False)
+
+    total_disposed = 0
+    for dis in disposed:
+        total_disposed += dis.qty_to_be_disposed
+
     total_used = 0
     for use in total_used_equipment:
         total_used += use.qty_to_be_used
 
-    total_available = equipment.qty_per_package - total_used
+    total_available = equipment.qty_per_package - total_used - total_disposed
     
-    # detailed = list(total_used_equipment)
-
-    # detailed_qty = []
-    # detailed_date = []
-    # for detailed_use in detailed:
-    #     date = detailed_use.qty_to_be_used
-    #     quantity = detailed_use.date_being_used
-        
-    #     detailed_date.append(date)
-    #     detailed_qty.append(quantity)
-
 
 
     context = {
@@ -66,6 +62,9 @@ def detailed_equipment(request, id):
         'total_used': total_used,
         'total_available': total_available,
         'total_used_equipment': total_used_equipment,
+        'total_disposed': total_disposed,
+        'disposed': disposed,
+        'not_used_equipment': not_used_equipment,
     }
 
     return render(request, template_name, context=context)
@@ -89,3 +88,18 @@ def use_equipment(request):
 
     return render(request, template_name, context=context)
 
+
+def dispose_equipment(request, id):
+    to_be_disposed = Used.objects.get(id=id)
+
+    disposed, created =  Disposed.objects.get_or_create(
+                        equipment=to_be_disposed.equipment,
+                        qty_to_be_disposed=to_be_disposed.qty_to_be_used
+                        )  
+    to_be_disposed.is_used = False
+    to_be_disposed.save()
+    
+    
+
+
+    return redirect(home)

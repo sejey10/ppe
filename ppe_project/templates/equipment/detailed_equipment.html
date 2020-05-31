@@ -14,15 +14,38 @@
 	<br>
 	Currently Available: {{ total_available }}
 	<br>
+	Total Disposed: {{ total_disposed }}
 
 	<hr>
-	Detailed breakdown of usage
+	Detailed breakdown of currently being used
 	{% for use in total_used_equipment %}
 		<ul>
 			<li>{{ use.date_being_used }} - {{ use.qty_to_be_used }}
-			id: {{ use.pk }} </li>
+				Used id: {{ use.pk }} <a href="{% url 'dispose_equipment' use.pk %}">Dispose</a></li>
 		</ul>
 	{% endfor %}
+	<br>
+	<hr>
+	Detailed breakdown of when equipment was disposed
+	{% for dis in disposed %}
+		<ul>
+			<li>
+				{{ dis.date_disposed}} - {{ dis.qty_to_be_disposed }}
+			</li>
+		</ul>
+	{% endfor %}
+	<br>
+	<hr>
+	Detailed breakdown of equipment that was used
+	{% for not_used in not_used_equipment %}
+	<ul>
+		<li>
+					{{ not_used.date_being_used }} - {{ not_used.qty_to_be_used }}
+
+		</li>
+	</ul>
+	{% endfor %}
+
 	
 </body>
 </html>

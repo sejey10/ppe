@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from .models import Equipment, Used
+from .models import Equipment, Used, Disposed
 
 
 class EquipmentForm(ModelForm):
@@ -11,4 +11,6 @@ class EquipmentForm(ModelForm):
 class UseEquipmentForm(ModelForm):
     class Meta:
         model = Used
-        fields = '__all__'
+        fields = ['equipment', 'date_being_used', 'qty_to_be_used']
+
+
