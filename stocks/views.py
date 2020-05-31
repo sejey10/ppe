@@ -39,7 +39,7 @@ def add_equipment(request):
     }
     return render(request, template_name, context=context)
 
-
+@login_required
 def detailed_equipment(request, id):
     template_name = 'equipment/detailed_equipment.html'
     equipment = Equipment.objects.get(id=id)
