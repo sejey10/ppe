@@ -1,0 +1,297 @@
+{% extends 'js_base.html' %}
+
+
+{% block script %}
+<script>
+
+//  masks
+  $(document).ready(function(){
+  var ctx = document.getElementById('maskChart').getContext('2d');
+  var myChart = new Chart(ctx, {
+    type: 'pie',
+    data: {
+        labels: ['Available Masks', 'Currently used masks', 'Disposed masks'],
+        datasets: [{
+            label: 'Mask Analytics',
+            data: ["{{ total_available_masks }}", "{{total_used_masks}}", "{{total_disposed_masks}}"],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: false,
+        tooltips: {
+            enabled: true
+        },
+        pieceLabel: {
+         render: 'percentage' //show values
+      }
+        
+    },
+
+});
+});
+
+// caps
+$(document).ready(function(){
+  var ctx = document.getElementById('capsChart').getContext('2d');
+  var myChart = new Chart(ctx, {
+    type: 'pie',
+    data: {
+        labels: ['Available Caps', 'Currently used caps', 'Disposed caps'],
+        datasets: [{
+            label: 'Mask Analytics',
+            data: ["{{ total_available_caps }}", "{{total_used_caps}}", "{{total_disposed_caps}}"],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: false,
+        tooltips: {
+            enabled: true
+        },
+        pieceLabel: {
+         render: 'percentage' //show values
+      }
+        
+    },
+
+});
+});
+
+// gowns
+$(document).ready(function(){
+  var ctx = document.getElementById('gownsChart').getContext('2d');
+  var myChart = new Chart(ctx, {
+    type: 'pie',
+    data: {
+        labels: ['Available Gowns', 'Currently used gowns', 'Disposed gowns'],
+        datasets: [{
+            label: 'Gowns Analytics',
+            data: ["{{ total_available_gown }}", "{{total_used_gown}}", "{{total_disposed_gown}}"],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: false,
+        tooltips: {
+            enabled: true
+        },
+        pieceLabel: {
+         render: 'percentage' //show values
+      }
+        
+    },
+
+});
+});
+
+// goggles
+$(document).ready(function(){
+  var ctx = document.getElementById('gogglesChart').getContext('2d');
+  var myChart = new Chart(ctx, {
+    type: 'pie',
+    data: {
+        labels: ['Available Goggles', 'Currently used goggles', 'Disposed goggles'],
+        datasets: [{
+            label: 'Goggles Analytics',
+            data: ["{{ total_available_gogs }}", "{{total_used_gogs}}", "{{total_disposed_gogs}}"],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: false,
+        tooltips: {
+            enabled: true
+        },
+        pieceLabel: {
+         render: 'percentage' //show values
+      }
+        
+    },
+
+});
+});
+
+
+$(document).ready(function(){
+  var ctx = document.getElementById('availableChart').getContext('2d');
+  var myChart = new Chart(ctx, {
+    type: 'horizontalBar',
+    data: {
+        labels: ['Available Goggles', 'Available Caps', 'Available Gowns',
+                'Available Masks'],
+        datasets: [{
+            label: 'Total Available Analytics',
+            data: ["{{ total_available_gogs }}", "{{total_available_caps}}", "{{total_available_gown}}",
+                  "{{total_available_masks}}"],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(162, 222, 208, 1)',
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(42, 187, 155, 1)',
+
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            xAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        },
+        responsive: false,
+        // pieceLabel: {
+        //   render: 'value',
+        // },
+
+    }
+
+
+});
+});
+
+</script>
+{% endblock script %}
+
+
+{% block content %}
+
+<h1>Analytic Dashboard</h1>
+
+
+<h2>Total Available Inventory </h2>
+<canvas id="availableChart" width="650" height="650"></canvas>
+
+
+
+<h5>Masks</h5>
+<div class="card bg-light mb-3" style="max-width: 13rem;">
+  <div class="card-header">Total Number of Masks</div>
+  <div class="card-body">
+    <h5 class="card-title">{{ total_masks_qty }}</h5>
+  </div>
+</div>
+
+<!-- <h6>Total Used Masks: {{ total_used_masks }}</h6>
+<h6>Total Available Masks: {{ total_available_masks }}</h6>
+<h6>Total Disposed Masks: {{ total_disposed_masks }}</h6> -->
+<canvas id="maskChart" width="350" height="350"></canvas>
+<hr>
+
+
+
+<h5>Caps</h5>
+<div class="card bg-light mb-3" style="max-width: 13rem;">
+  <div class="card-header">Total Number of Caps</div>
+  <div class="card-body">
+    <h5 class="card-title">{{ total_caps_qty }}</h5>
+  </div>
+</div>
+<!-- <h6>Total Used Caps: {{ total_used_caps }}</h6>
+<h6>Total Available Caps: {{ total_available_caps }}</h6>
+<h6>Total Disposed Caps: {{ total_disposed_caps }}</h6> -->
+<canvas id="capsChart" width="350" height="350"></canvas>
+<hr>
+
+
+
+<h5>Gowns</h5>
+<div class="card bg-light mb-3" style="max-width: 13rem;">
+  <div class="card-header">Total Number of Gowns</div>
+  <div class="card-body">
+    <h5 class="card-title">{{ total_gown_qty }}</h5>
+  </div>
+</div>
+
+<!-- <h6>Total Used Gowns: {{ total_used_gown }}</h6>
+<h6>Total Available Gowns: {{ total_available_gown }}</h6>
+<h6>Total Disposed Gowns: {{ total_disposed_gown }}</h6> -->
+<canvas id="gownsChart" width="350" height="350"></canvas>
+<hr>
+
+
+
+<h5>Goggles</h5>
+<div class="card bg-light mb-3" style="max-width: 13rem;">
+  <div class="card-header">Total Number of Goggles</div>
+  <div class="card-body">
+    <h5 class="card-title">{{ total_gogs_qty }}</h5>
+  </div>
+</div>
+<!-- <h6>Total Used Goggles: {{ total_used_gogs }}</h6>
+<h6>Total Available Goggles: {{ total_available_gogs }}</h6>
+<h6>Total Disposed Goggles: {{ total_disposed_gogs }}</h6> -->
+<canvas id="gogglesChart" width="350" height="350"></canvas>
+<hr>
+
+
+{% endblock content %}
+

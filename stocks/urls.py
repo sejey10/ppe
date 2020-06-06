@@ -13,7 +13,7 @@ urlpatterns = [
     path('dispose_equipment/<int:id>', views.dispose_equipment, name='dispose_equipment'),
     path('detailed_equipment/<int:id>', views.detailed_equipment, name='detailed_equipment'),
 
-
+    path('delete_equipment/<int:pk>', views.DeleteEquipment.as_view(), name='delete_equipment')
 
 
 ]

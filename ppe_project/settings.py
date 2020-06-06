@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     # local apps
     'stocks',
     'users',
+    'analytics',
     'crispy_forms',
 ]
 
@@ -83,8 +84,12 @@ WSGI_APPLICATION = 'ppe_project.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'ppm',
+        'USER': 'postgres',
+        'PASSWORD': '1234',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 

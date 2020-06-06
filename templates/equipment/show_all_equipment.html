@@ -14,7 +14,9 @@
        </a>
         - {{ equipment.qty_per_package }} {{ equipment.item_name }}S
        Received by: {{ equipment.date_of_receipt }}
+       <a href="{% url 'delete_equipment' equipment.pk %}">Delete</a>
        <br>
+
     {% endfor %}
 
 {% endblock content %}

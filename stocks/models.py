@@ -56,7 +56,7 @@ class Equipment(models.Model):
 
 
     def __str__(self):
-        return self.package_number
+        return f'{self.package_number} {self.item_name}'
 
 
 class Used(models.Model):

@@ -6,6 +6,8 @@ from django.contrib.auth.decorators import login_required
 from .forms import EquipmentForm, UseEquipmentForm
 from .models import Equipment, Used, Disposed
 
+from django.views.generic.edit import DeleteView
+from django.urls import reverse_lazy
 
 # Home Page
 def home(request):
@@ -57,7 +59,8 @@ def detailed_equipment(request, id):
 
     total_available = equipment.qty_per_package - total_used - total_disposed
     
-
+    print(request.META['HTTP_REFERER'])
+    
 
     context = {
         'equipment': equipment,
@@ -71,6 +74,11 @@ def detailed_equipment(request, id):
 
     return render(request, template_name, context=context)
 
+
+class DeleteEquipment(DeleteView):
+    model = Equipment
+    template_name = 'equipment/equipment_confirm_delete.html'
+    success_url = reverse_lazy('home')
 
 
 @login_required
@@ -100,8 +108,10 @@ def dispose_equipment(request, id):
                         )  
     to_be_disposed.is_used = False
     to_be_disposed.save()
-    
-    
+
+    # get current detailed equipment
+    equipment_id = to_be_disposed.equipment.pk
 
 
-    return redirect(home)
+
+    return redirect(detailed_equipment, equipment_id)

@@ -21,6 +21,7 @@ urlpatterns = [
     path('', include('stocks.urls')),
     # user urls
     path('user/', include('users.urls')),
-    path('users/', include('django.contrib.auth.urls')), # new
+    path('users/', include('django.contrib.auth.urls')),
+    path('analytics', include('analytics.urls')), # new
     path('admin/', admin.site.urls),
 ]
