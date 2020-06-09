@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 
 
 from .forms import EquipmentForm, UseEquipmentForm
-from .models import Equipment, Used, Disposed
+from .models import Equipment, Used, DisposedEquipment, DisposedPackage
 
 from django.views.generic.edit import DeleteView
 from django.urls import reverse_lazy
@@ -18,7 +18,7 @@ def home(request):
 # Show All Equipment Page
 def show_all_equipment(request):
     template_name = 'equipment/show_all_equipment.html'
-    all_equipment = Equipment.objects.all()
+    all_equipment = Equipment.objects.all().filter(is_deleted=False)
     context = {
         'all_equipment': all_equipment
     }
@@ -46,7 +46,7 @@ def detailed_equipment(request, id):
     template_name = 'equipment/detailed_equipment.html'
     equipment = Equipment.objects.get(id=id)
     total_used_equipment = Used.objects.all().filter(equipment=id).filter(is_used=True)
-    disposed = Disposed.objects.all().filter(equipment=id)
+    disposed = DisposedEquipment.objects.all().filter(equipment=id)
     not_used_equipment = Used.objects.all().filter(equipment=id).filter(is_used=False)
 
     total_disposed = 0
@@ -58,8 +58,6 @@ def detailed_equipment(request, id):
         total_used += use.qty_to_be_used
 
     total_available = equipment.qty_per_package - total_used - total_disposed
-    
-    print(request.META['HTTP_REFERER'])
     
 
     context = {
@@ -75,10 +73,6 @@ def detailed_equipment(request, id):
     return render(request, template_name, context=context)
 
 
-class DeleteEquipment(DeleteView):
-    model = Equipment
-    template_name = 'equipment/equipment_confirm_delete.html'
-    success_url = reverse_lazy('home')
 
 
 @login_required
@@ -102,9 +96,10 @@ def use_equipment(request):
 def dispose_equipment(request, id):
     to_be_disposed = Used.objects.get(id=id)
 
-    disposed, created =  Disposed.objects.get_or_create(
+    disposed, created =  DisposedEquipment.objects.get_or_create(
                         equipment=to_be_disposed.equipment,
-                        qty_to_be_disposed=to_be_disposed.qty_to_be_used
+                        qty_to_be_disposed=to_be_disposed.qty_to_be_used,
+                        is_disposed=True
                         )  
     to_be_disposed.is_used = False
     to_be_disposed.save()
@@ -115,3 +110,18 @@ def dispose_equipment(request, id):
 
 
     return redirect(detailed_equipment, equipment_id)
+
+
+@login_required
+def dispose_package(request, pk):
+    to_be_disposed = Equipment.objects.get(pk=pk)
+    to_be_disposed_used = Used.objects.filter(equipment=to_be_disposed).update(is_used=False)
+    disposed, created =  DisposedPackage.objects.get_or_create(
+                        equipment=to_be_disposed,
+                        qty_to_be_disposed=to_be_disposed.qty_per_package
+                        )  
+    to_be_disposed.is_deleted = True
+    to_be_disposed.save()
+
+
+    return redirect(show_all_equipment)

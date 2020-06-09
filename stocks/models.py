@@ -53,10 +53,14 @@ class Equipment(models.Model):
     received_by = models.CharField(max_length=200)
     checked_by = models.CharField(max_length=200)
     date_of_receipt = models.DateField()
+    is_deleted = models.BooleanField(default=False)
+
 
 
     def __str__(self):
         return f'{self.package_number} {self.item_name}'
+
+
 
 
 class Used(models.Model):
@@ -69,11 +73,25 @@ class Used(models.Model):
         ordering = ['date_being_used']
 
     def __str__(self):
-        return self.qty_to_be_used
+        return str(self.qty_to_be_used)
 
 
 
-class Disposed(models.Model):
+
+
+class DisposedEquipment(models.Model):
+    used = models.ForeignKey(Used, on_delete=models.CASCADE, null=True)
+    equipment = models.ForeignKey(Equipment, on_delete=models.CASCADE)
+    date_disposed = models.DateField(auto_now_add=True)
+    qty_to_be_disposed = models.IntegerField()
+    is_disposed = models.BooleanField(default=False)
+
+
+    def __str__(self):
+        return self.qty_to_be_disposed
+
+
+class DisposedPackage(models.Model):
     used = models.ForeignKey(Used, on_delete=models.CASCADE, null=True)
     equipment = models.ForeignKey(Equipment, on_delete=models.CASCADE)
     date_disposed = models.DateField(auto_now_add=True)
