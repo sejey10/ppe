@@ -3,6 +3,9 @@ import json
 # stocks
 from stocks.models import Equipment, Used, Disposed
 
+from django.http import HttpResponse
+from django.db.models import Sum
+
 
 def home(request):
     template_name = 'analytics/index.html'
@@ -95,19 +98,19 @@ def home(request):
     total_available = total_available_caps + total_available_gown + total_available_gogs + total_available_masks
 
 
-
-    
-
     # pie chart test
     dates = []
     qty = []
-
     # used equipment
-    used_q = Used.objects.all()
+    used_q = Used.objects.filter().values('date_being_used').order_by('date_being_used').annotate(sum=Sum('qty_to_be_used'))
     for use in used_q:
-        qty.append(str(use.qty_to_be_used))
-        dates.append(str(use.date_being_used))
+        date = use['date_being_used']
+        qt = use['sum']
+        dates.append(str(date))
+        qty.append(qt)
    
+    print(dates)
+    print(qty)
     context = {
         # gogs
         'total_gogs_qty':total_gogs_qty,
@@ -143,13 +146,9 @@ def home(request):
         
     
     }
-    print(dates)
-    print(qty)  
 
 
 
 
     return render(request, template_name, context=context)
-
-
 
