@@ -1,5 +1,5 @@
 from django.shortcuts import render
-
+import json
 # stocks
 from stocks.models import Equipment, Used, Disposed
 
@@ -96,10 +96,18 @@ def home(request):
 
 
 
-    # pie chart test
-    mask_label = []
-    data = []
+    
 
+    # pie chart test
+    dates = []
+    qty = []
+
+    # used equipment
+    used_q = Used.objects.all()
+    for use in used_q:
+        qty.append(str(use.qty_to_be_used))
+        dates.append(str(use.date_being_used))
+   
     context = {
         # gogs
         'total_gogs_qty':total_gogs_qty,
@@ -128,9 +136,15 @@ def home(request):
 
         'total_available': total_available,
 
-        
+        'used': used_q,
+        'dates': dates,
+        'qty': qty,
 
+        
+    
     }
+    print(dates)
+    print(qty)  
 
 
 

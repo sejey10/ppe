@@ -174,7 +174,7 @@ $(document).ready(function(){
 
 $(document).ready(function(){
   var ctx = document.getElementById('availableChart').getContext('2d');
-  var myChart = new Chart(ctx, {
+  var chart = new Chart(ctx, {
     type: 'horizontalBar',
     data: {
         labels: ['Available Goggles', 'Available Caps', 'Available Gowns',
@@ -208,9 +208,9 @@ $(document).ready(function(){
             }]
         },
         responsive: false,
-        // pieceLabel: {
-        //   render: 'value',
-        // },
+        pieceLabel: {
+          render: 'percentage',
+        },
 
     }
 
@@ -218,11 +218,61 @@ $(document).ready(function(){
 });
 });
 
+// var dates = {{ dates|safe }};
+// console.log("This is the dates", dates)
+
+
+// var qty = {{ qty|safe }};
+// console.log("This is the quantity", qty)
+
+
+
+$(document).ready(function(){
+  var ctx = document.getElementById('lineChart').getContext('2d');
+  var chart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: {{ dates|safe }},
+        datasets: [{
+            label: 'Total Use Per Day Analytics',
+            data: {{ qty|safe }},
+            backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+            ],
+            borderColor: [
+            'rgba(255, 99, 132, 1)',
+
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            xAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        },
+        responsive: false,
+        pieceLabel: {
+          render: 'percentage',
+        },
+
+    }
+
+
+});
+});
+
+
+
 </script>
 {% endblock script %}
 
-
 {% block content %}
+
+<canvas id="lineChart" width="650" height="650"></canvas>
 
 <h1>Analytic Dashboard</h1>
 

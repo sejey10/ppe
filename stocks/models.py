@@ -65,7 +65,8 @@ class Used(models.Model):
     qty_to_be_used = models.IntegerField()
     is_used = models.BooleanField(default=True)
 
-
+    class Meta:
+        ordering = ['date_being_used']
 
     def __str__(self):
         return self.qty_to_be_used
