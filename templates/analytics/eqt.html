@@ -1,0 +1,268 @@
+{% extends 'js_base.html' %}
+
+
+
+
+    {% block content %}
+
+
+    <div class="container-fluid">
+      <div class="row">
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+          <div class="sidebar-sticky">
+            <ul class="nav flex-column">
+              <li class="nav-item">
+                <a class="nav-link active" href="{% url 'analytics_home' %}">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                  Dashboard <span class="sr-only">(current)</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'analytics_eqt' %}">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg>
+                  Equipment Analytics
+                </a>
+              </li>
+  
+        </nav>
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4"><div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
+          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+            <h1 class="h2">Equipment Analytics</h1>
+          </div>
+
+
+<div class="flex-container">
+    <div><h5>Masks</h5>
+        <div class="card bg-light mb-3" style="max-width: 13rem;">
+          <div class="card-header">Total Number of Masks</div>
+          <div class="card-body">
+            <h5 class="card-title">{{ total_masks_qty }}</h5>
+          </div>
+        </div>
+        <canvas id="maskChart" width="350" height="350"></canvas>
+        </div>
+    <div><h5>Caps</h5>
+        <div class="card bg-light mb-3" style="max-width: 13rem;">
+          <div class="card-header">Total Number of Caps</div>
+          <div class="card-body">
+            <h5 class="card-title">{{ total_caps_qty }}</h5>
+          </div>
+        </div>
+ 
+        <canvas id="capsChart" width="350" height="350"></canvas>
+        </div>
+    <div><h5>Gowns</h5>
+        <div class="card bg-light mb-3" style="max-width: 13rem;">
+          <div class="card-header">Total Number of Gowns</div>
+          <div class="card-body">
+            <h5 class="card-title">{{ total_gown_qty }}</h5>
+          </div>
+        </div>
+
+        <canvas id="gownsChart" width="350" height="350"></canvas>
+        </div>
+    <div>
+
+        <h5>Goggles</h5>
+        <div class="card bg-light mb-3" style="max-width: 13rem;">
+          <div class="card-header">Total Number of Goggles</div>
+          <div class="card-body">
+            <h5 class="card-title">{{ total_gogs_qty }}</h5>
+          </div>
+        </div>
+
+        <canvas id="gogglesChart" width="350" height="350"></canvas>
+       
+        </div>
+  </div>
+    {% endblock content %}
+
+  
+  {% block script %}
+<script>
+
+//  masks
+  $(document).ready(function(){
+  var ctx = document.getElementById('maskChart').getContext('2d');
+  var myChart = new Chart(ctx, {
+    type: 'pie',
+    data: {
+        labels: ['Available Masks', 'Currently used masks', 'Disposed masks'],
+        datasets: [{
+            label: 'Mask Analytics',
+            data: ["{{ total_available_masks }}", "{{total_used_masks}}", "{{total_disposed_masks}}"],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: false,
+        tooltips: {
+            enabled: true
+        },
+        pieceLabel: {
+         render: 'percentage' //show values
+      }
+        
+    },
+
+});
+});
+
+// caps
+$(document).ready(function(){
+  var ctx = document.getElementById('capsChart').getContext('2d');
+  var myChart = new Chart(ctx, {
+    type: 'pie',
+    data: {
+        labels: ['Available Caps', 'Currently used caps', 'Disposed caps'],
+        datasets: [{
+            label: 'Mask Analytics',
+            data: ["{{ total_available_caps }}", "{{total_used_caps}}", "{{total_disposed_caps}}"],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: false,
+        tooltips: {
+            enabled: true
+        },
+        pieceLabel: {
+         render: 'percentage' //show values
+      }
+        
+    },
+
+});
+});
+
+// gowns
+$(document).ready(function(){
+  var ctx = document.getElementById('gownsChart').getContext('2d');
+  var myChart = new Chart(ctx, {
+    type: 'pie',
+    data: {
+        labels: ['Available Gowns', 'Currently used gowns', 'Disposed gowns'],
+        datasets: [{
+            label: 'Gowns Analytics',
+            data: ["{{ total_available_gown }}", "{{total_used_gown}}", "{{total_disposed_gown}}"],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: false,
+        tooltips: {
+            enabled: true
+        },
+        pieceLabel: {
+         render: 'percentage' //show values
+      }
+        
+    },
+
+});
+});
+
+// goggles
+$(document).ready(function(){
+  var ctx = document.getElementById('gogglesChart').getContext('2d');
+  var myChart = new Chart(ctx, {
+    type: 'pie',
+    data: {
+        labels: ['Available Goggles', 'Currently used goggles', 'Disposed goggles'],
+        datasets: [{
+            label: 'Goggles Analytics',
+            data: ["{{ total_available_gogs }}", "{{total_used_gogs}}", "{{total_disposed_gogs}}"],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: false,
+        tooltips: {
+            enabled: true
+        },
+        pieceLabel: {
+         render: 'percentage' //show values
+      }
+        
+    },
+
+});
+});
+
+
+
+
+
+// var dates = {{ dates|safe }};
+// console.log("This is the dates", dates)
+
+
+// var qty = {{ qty|safe }};
+// console.log("This is the quantity", qty)
+
+
+
+
+</script>
+{% endblock script %}
+  
