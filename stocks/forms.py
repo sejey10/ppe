@@ -9,7 +9,10 @@ class DateInput(forms.DateInput):
 class EquipmentForm(ModelForm):
     class Meta:
         model = Equipment
-        fields = '__all__'
+        fields = ['package_number', 'item_name',
+                    'qty_per_package', 'condition_upon_received',
+                    'supplier', 'received_by', 'checked_by',
+                    'date_of_receipt']
         widgets = {
             'date_of_receipt': DateInput(), # (A) here
         }
