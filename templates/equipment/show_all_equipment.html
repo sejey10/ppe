@@ -15,6 +15,7 @@
         - {{ equipment.qty_per_package }} {{ equipment.item_name }}S
        Received by: {{ equipment.date_of_receipt }}
        <a href="{% url 'dispose_package' equipment.pk %}">Delete</a>
+       <a href="{% url 'update_package' equipment.pk %}">Update</a>
        <br>
 
     {% endfor %}

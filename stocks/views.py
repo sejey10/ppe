@@ -125,3 +125,18 @@ def dispose_package(request, pk):
 
 
     return redirect(show_all_equipment)
+
+
+@login_required
+def update_package(request, pk):
+    template_name = 'equipment/update_package.html'
+    specific_owner = Equipment.objects.get(pk=pk)
+    form = EquipmentForm(request.POST or None, instance=specific_owner)
+    if  form.is_valid():
+        form.save()
+        return redirect(home)
+    print('Failed to submit')
+    context = {
+        'form': form
+    }
+    return render(request, template_name, context=context)
